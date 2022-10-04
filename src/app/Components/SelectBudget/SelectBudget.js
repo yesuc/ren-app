@@ -1,17 +1,35 @@
 import React from "react";
 import Grid from '@mui/material/Unstable_Grid2';
-import { Button, Typography, Container } from "@mui/material";
+import { Button, Typography, Container, Icon } from "@mui/material";
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 
 export default class SelectBudget extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            value: '',
+        };
+
+        // Bind methods here
+        this.handleSelect = this.handleSelect.bind(this);
+    }
+
+    handleSelect(event) {
+        event.preventDefault();
+        let eventValue = event.currentTarget.value;
+        this.setState((prevState) => {
+            if (prevState.value === eventValue) return { value: '' };
+            return {
+                value: eventValue,
+            }
+        });
+
     }
 
     render() {
         return (
-            <Container maxWidth={false} sx={{ py: 3, height: '100%' }}>
-                <Grid 
+            <Container maxWidth={false} sx={{ height: '100%' }}>
+                <Grid
                     container
                     sx={{ height: '100%' }}
                 >
@@ -41,7 +59,7 @@ export default class SelectBudget extends React.Component {
                         <Grid>
                             <Typography variant="p">
                                 Select your preferred Budget Strategy.
-                                Each strategy splits your income in the order of 
+                                Each strategy splits your income in the order of
                                 <strong> Needs / Wants / Savings</strong>
                             </Typography>
                         </Grid>
@@ -49,27 +67,48 @@ export default class SelectBudget extends React.Component {
                             <Button
                                 variant="contained"
                                 size="large"
+                                value="50 / 30 / 20"
+                                onClick={this.handleSelect}
+                                color={this.state.value === "50 / 30 / 20" ? "primary" : "secondary"}
                             >
                                 <Typography variant="h3">
                                     50 / 30 / 20
                                 </Typography>
                             </Button>
                         </Grid>
-                        <Grid >
+                        <Grid>
                             <Button
                                 variant="contained"
                                 size="large"
+                                value="50 / 20 / 30"
+                                onClick={this.handleSelect}
+                                color={ this.state.value === "50 / 20 / 30" ? "primary" : "secondary" }
                             >
                                 <Typography variant="h3">
                                     50 / 20 / 30
                                 </Typography>
                             </Button>
                         </Grid>
-                        <Grid >
-                            <Button variant="contained" size="large">
+                        <Grid>
+                            <Button 
+                                variant="contained" 
+                                size="large"
+                                value="40 / 30 / 30"
+                                onClick={this.handleSelect}
+                                color={ this.state.value === "40 / 30 / 30" ? "primary" : "secondary" }
+                            >
                                 <Typography variant="h3">
                                     50 / 30 / 20
                                 </Typography>
+                            </Button>
+                        </Grid>
+                        <Grid>
+                            <Button
+                                variant="contained"
+                                disabled={this.state.value ? false : true }
+                                endIcon={<ArrowRightIcon />}
+                            >
+                                Continue
                             </Button>
                         </Grid>
                     </Grid>
